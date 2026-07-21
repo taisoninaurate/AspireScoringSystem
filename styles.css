@@ -99,6 +99,13 @@ body {
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
 }
 
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
 .card-title {
   font-family: var(--font-heading);
   font-size: 15px;
@@ -106,7 +113,23 @@ body {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 14px;
+}
+
+.btn-secondary-sm {
+  background-color: rgba(37, 99, 235, 0.15);
+  border: 1px solid var(--primary);
+  color: #60a5fa;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary-sm:hover {
+  background-color: var(--primary);
+  color: #ffffff;
 }
 
 /* Form Controls */
@@ -320,6 +343,108 @@ body {
 
 .btn-submit:active {
   transform: scale(0.98);
+}
+
+/* Modal Popup */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-card {
+  background-color: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0b1424;
+}
+
+.modal-header h3 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+}
+
+.score-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.score-table th, .score-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 14px;
+}
+
+.score-table th {
+  background-color: #0d1626;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.score-badge-pass {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.score-badge-nyc {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.score-badge-num {
+  background-color: rgba(251, 191, 36, 0.15);
+  color: var(--accent-gold);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 800;
 }
 
 .hidden {

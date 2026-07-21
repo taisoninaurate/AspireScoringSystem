@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>ASPIRE Judges Mobile Scoring Portal</title>
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=3">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1b365d">
   <!-- Apple Mobile Web App Support -->
@@ -31,7 +31,10 @@
     <div class="column-left">
       <!-- Selection Controls Card -->
       <section class="card selection-card">
-        <h2 class="card-title">📌 Session & Athlete Details</h2>
+        <div class="card-header-flex">
+          <h2 class="card-title">📌 Session & Athlete Details</h2>
+          <button type="button" id="btn-fetch-scores" class="btn-secondary-sm">📊 View Scores</button>
+        </div>
 
         <div class="grid-2col">
           <div class="form-group">
@@ -150,6 +153,19 @@
     </div>
 
   </main>
+
+  <!-- Modal for Viewing Submitted Scores -->
+  <div id="scores-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">📊 Submitted Scores for Athlete</h3>
+        <button type="button" id="btn-close-modal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-scores-body">
+        <div class="loading-spinner">Loading submitted scores...</div>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
