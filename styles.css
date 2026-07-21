@@ -117,12 +117,12 @@ body {
 
 .btn-secondary-sm {
   background-color: rgba(37, 99, 235, 0.15);
-  border: 1px solid var(--primary);
+  border: 1.5px solid var(--primary);
   color: #60a5fa;
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -352,8 +352,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -365,12 +365,11 @@ body {
   background-color: var(--card-bg);
   border: 1.5px solid var(--card-border);
   border-radius: var(--radius-lg);
-  max-width: 680px;
+  max-width: 540px;
   width: 100%;
-  max-height: 85vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
 
@@ -399,52 +398,134 @@ body {
 }
 
 .modal-body {
-  padding: 20px 24px;
-  overflow-y: auto;
+  padding: 24px;
 }
 
-.score-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+/* Single Session Card Styling */
+.single-session-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.score-table th, .score-table td {
-  padding: 12px 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--card-border);
-  font-size: 14px;
-}
-
-.score-table th {
+.session-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #0d1626;
-  color: var(--text-muted);
-  font-weight: 700;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+}
+
+.badge-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-gold);
   text-transform: uppercase;
 }
 
-.score-badge-pass {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  padding: 4px 10px;
-  border-radius: 6px;
+.session-info h2 {
+  font-family: var(--font-heading);
+  font-size: 22px;
   font-weight: 800;
+  color: #ffffff;
 }
 
-.score-badge-nyc {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-weight: 800;
+.judge-info-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-.score-badge-num {
-  background-color: rgba(251, 191, 36, 0.15);
+.j-title {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.j-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.info-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.single-numeric-score-display {
+  font-family: var(--font-heading);
+  font-size: 54px;
+  font-weight: 800;
   color: var(--accent-gold);
-  padding: 4px 10px;
-  border-radius: 6px;
+  text-align: center;
+  background-color: #0b1424;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--primary);
+}
+
+.single-score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.score-box-item {
+  background-color: #0b1424;
+  border: 1px solid var(--card-border);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.box-lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.box-val {
+  font-size: 18px;
   font-weight: 800;
+}
+
+.val-pass {
+  color: #34d399;
+}
+
+.val-nyc {
+  color: #f87171;
+}
+
+.comments-output-box {
+  background-color: #0b1424;
+  border: 1px solid var(--card-border);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: #e2e8f0;
+  min-height: 60px;
+}
+
+.empty-alert-box {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1.5px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .hidden {

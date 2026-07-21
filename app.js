@@ -1,4 +1,4 @@
-// ASPIRE Mobile Web App - 100% Dynamic Engine with Live Submitted Score Viewing & Fetching
+// ASPIRE Mobile Web App - Focused Single Session Score Viewer
 document.addEventListener("DOMContentLoaded", function() {
 
   // Deployed Apps Script Web App Endpoint
@@ -170,7 +170,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function updateDropdowns() {
     const level = parseInt(selectLevel.value) || 1;
-    const judgeNo = selectJudge.value || "1";
 
     // Populate Element Dropdown
     selectElement.innerHTML = "";
@@ -245,8 +244,6 @@ document.addEventListener("DOMContentLoaded", function() {
   async function fetchAthleteSubmittedScores() {
     const level = parseInt(selectLevel.value) || 1;
     const athleteNo = parseInt(selectAthlete.value) || 1;
-    const judgeNo = parseInt(selectJudge.value) || 1;
-    const elemNo = parseInt(selectElement.value) || 1;
 
     try {
       const response = await fetch(APPS_SCRIPT_URL, {
@@ -258,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       if (data.status === "success" && data.scores) {
         currentAthleteSubmittedScores = data.scores;
-        populateCurrentSubmittedScore(elemNo, judgeNo, level);
+        populateCurrentSubmittedScore(selectElement.value, selectJudge.value, level);
       }
     } catch (err) {
       console.warn("Could not fetch submitted scores:", err);
@@ -393,13 +390,17 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // View Submitted Scores Modal Handler
+  // Focused 1-Session View Score Handler
   btnFetchScores.addEventListener("click", async function() {
     const level = parseInt(selectLevel.value);
+    const judgeNo = parseInt(selectJudge.value);
+    const elemNo = parseInt(selectElement.value);
     const athleteNo = parseInt(selectAthlete.value);
-    modalTitle.textContent = `📊 Submitted Scores - Athlete #${athleteNo} (Level ${level})`;
+    const judgeName = displayJudgeName.textContent;
+
+    modalTitle.textContent = `📊 Current Session Score Record`;
     scoresModal.classList.remove("hidden");
-    modalScoresBody.innerHTML = `<div class="loading-spinner">Loading scores from Google Sheets...</div>`;
+    modalScoresBody.innerHTML = `<div class="loading-spinner">Fetching score from Google Sheets...</div>`;
 
     try {
       const response = await fetch(APPS_SCRIPT_URL, {
@@ -409,13 +410,16 @@ document.addEventListener("DOMContentLoaded", function() {
       });
       const data = await response.json();
 
-      if (data.status === "success" && data.scores) {
-        renderScoresTable(data.scores, level);
+      if (data.status === "success" && data.scores && data.scores[elemNo]) {
+        const elemData = data.scores[elemNo];
+        const judgeData = elemData[`j${judgeNo}`];
+
+        renderSingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo, judgeData);
       } else {
-        modalScoresBody.innerHTML = `<p style="color:#ef4444;">No submitted scores found for Athlete #${athleteNo}.</p>`;
+        renderEmptySingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo);
       }
     } catch (err) {
-      modalScoresBody.innerHTML = `<p style="color:#ef4444;">Failed to fetch scores. Please try again.</p>`;
+      modalScoresBody.innerHTML = `<p style="color:#ef4444; padding:20px;">Failed to fetch score. Please check network connection.</p>`;
     }
   });
 
@@ -423,49 +427,80 @@ document.addEventListener("DOMContentLoaded", function() {
     scoresModal.classList.add("hidden");
   });
 
-  function renderScoresTable(scores, level) {
-    let html = `<table class="score-table">
-      <thead>
-        <tr>
-          <th>Elem #</th>
-          <th>Judge 1</th>
-          <th>Judge 2</th>
-          <th>Judge 3</th>
-        </tr>
-      </thead>
-      <tbody>`;
+  function renderSingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo, judgeData) {
+    let scoreDisplay = "";
+    let commentsDisplay = (judgeData && judgeData.comments && judgeData.comments.toString().trim() !== "") ? 
+                          judgeData.comments : "No comments entered";
 
-    for (let e = 1; e <= 12; e++) {
-      const elemData = scores[e];
-      if (!elemData) continue;
+    if (level <= 3) {
+      const r1 = (judgeData && judgeData.r1) ? judgeData.r1 : "-";
+      const r2 = (judgeData && judgeData.r2) ? judgeData.r2 : "-";
+      const r3 = (judgeData && judgeData.r3) ? judgeData.r3 : "-";
 
-      if (level <= 3) {
-        const j1Text = elemData.j1.r1 ? `R1:${elemData.j1.r1} R2:${elemData.j1.r2} R3:${elemData.j1.r3}` : "-";
-        const j2Text = elemData.j2.r1 ? `R1:${elemData.j2.r1} R2:${elemData.j2.r2} R3:${elemData.j2.r3}` : "-";
-        const j3Text = elemData.j3.r1 ? `R1:${elemData.j3.r1} R2:${elemData.j3.r2} R3:${elemData.j3.r3}` : "-";
-
-        html += `<tr>
-          <td><strong>Elem ${e}</strong></td>
-          <td><span class="score-badge-pass">${j1Text}</span></td>
-          <td><span class="score-badge-pass">${j2Text}</span></td>
-          <td><span class="score-badge-pass">${j3Text}</span></td>
-        </tr>`;
-      } else {
-        const j1Val = elemData.j1.score !== "" && elemData.j1.score !== undefined ? elemData.j1.score : "-";
-        const j2Val = elemData.j2.score !== "" && elemData.j2.score !== undefined ? elemData.j2.score : "-";
-        const j3Val = elemData.j3.score !== "" && elemData.j3.score !== undefined ? elemData.j3.score : "-";
-
-        html += `<tr>
-          <td><strong>Elem ${e}</strong></td>
-          <td><span class="score-badge-num">${j1Val}</span></td>
-          <td><span class="score-badge-num">${j2Val}</span></td>
-          <td><span class="score-badge-num">${j3Val}</span></td>
-        </tr>`;
-      }
+      scoreDisplay = `
+        <div class="single-score-grid">
+          <div class="score-box-item">
+            <span class="box-lbl">Req 1</span>
+            <span class="box-val ${r1==='C'||r1==='Comp'?'val-pass':'val-nyc'}">${r1}</span>
+          </div>
+          <div class="score-box-item">
+            <span class="box-lbl">Req 2</span>
+            <span class="box-val ${r2==='C'||r2==='Comp'?'val-pass':'val-nyc'}">${r2}</span>
+          </div>
+          <div class="score-box-item">
+            <span class="box-lbl">Req 3</span>
+            <span class="box-val ${r3==='C'||r3==='Comp'?'val-pass':'val-nyc'}">${r3}</span>
+          </div>
+        </div>`;
+    } else {
+      const scoreVal = (judgeData && judgeData.score !== undefined && judgeData.score !== "" && judgeData.score !== null) ? 
+                       parseFloat(judgeData.score).toFixed(1) : "0.0";
+      
+      scoreDisplay = `<div class="single-numeric-score-display">${scoreVal}</div>`;
     }
 
-    html += `</tbody></table>`;
-    modalScoresBody.innerHTML = html;
+    modalScoresBody.innerHTML = `
+      <div class="single-session-card">
+        <div class="session-card-header">
+          <div class="session-info">
+            <span class="badge-tag">Level ${level} • Element ${elemNo}</span>
+            <h2>Athlete #${athleteNo}</h2>
+          </div>
+          <div class="judge-info-badge">
+            <span class="j-title">Judge ${judgeNo}</span>
+            <span class="j-name">${judgeName}</span>
+          </div>
+        </div>
+
+        <div class="session-card-body">
+          <label class="info-label">Submitted Evaluation:</label>
+          ${scoreDisplay}
+
+          <label class="info-label" style="margin-top:16px;">Assessor Comments:</label>
+          <div class="comments-output-box">${commentsDisplay}</div>
+        </div>
+      </div>`;
+  }
+
+  function renderEmptySingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo) {
+    modalScoresBody.innerHTML = `
+      <div class="single-session-card empty-state">
+        <div class="session-card-header">
+          <div class="session-info">
+            <span class="badge-tag">Level ${level} • Element ${elemNo}</span>
+            <h2>Athlete #${athleteNo}</h2>
+          </div>
+          <div class="judge-info-badge">
+            <span class="j-title">Judge ${judgeNo}</span>
+            <span class="j-name">${judgeName}</span>
+          </div>
+        </div>
+        <div class="session-card-body">
+          <div class="empty-alert-box">
+            ⚠️ No score has been submitted yet for this session.
+          </div>
+        </div>
+      </div>`;
   }
 
   // Initial Load
