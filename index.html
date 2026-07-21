@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ASPIRE Judges Mobile Scoring Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1b365d">
+  <!-- Apple Mobile Web App Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ASPIRE Judge">
+  <link rel="apple-touch-icon" href="https://i.imgur.com/vHq4wzO.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="logo-badge">⚖️</div>
+    <div class="header-titles">
+      <h1>ASPIRE JUDGES PORTAL</h1>
+      <span class="sub-badge" id="live-status-badge">● LIVE SCORING PORTAL</span>
+    </div>
+  </header>
+
+  <main class="app-container">
+
+    <!-- Selection Controls Card -->
+    <section class="card selection-card">
+      <h2 class="card-title">📌 Session & Athlete Details</h2>
+
+      <div class="grid-2col">
+        <div class="form-group">
+          <label for="select-level">Aspire Level #</label>
+          <select id="select-level" class="styled-select">
+            <option value="1">Level 1</option>
+            <option value="2" selected>Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+            <option value="7">Level 7</option>
+            <option value="8">Level 8</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="select-judge">Judge #</label>
+          <select id="select-judge" class="styled-select">
+            <option value="1" selected>Judge 1</option>
+            <option value="2">Judge 2</option>
+            <option value="3">Judge 3</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="form-group">
+          <label for="select-element">Element #</label>
+          <select id="select-element" class="styled-select">
+            <!-- Dynamically populated -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="select-athlete">Athlete #</label>
+          <select id="select-athlete" class="styled-select">
+            <!-- Dynamically populated -->
+          </select>
+        </div>
+      </div>
+
+      <div class="judge-name-box">
+        <span class="judge-label">Assigned Judge:</span>
+        <span class="judge-value" id="display-judge-name">Shona</span>
+      </div>
+    </section>
+
+    <!-- Element Information Reference Card -->
+    <section class="card manual-card">
+      <div class="element-tag" id="element-number-tag">Level 2 - Element 6</div>
+      <h3 class="element-name" id="element-name-title">Ariana Rotation</h3>
+      <p class="element-subtitle" id="element-subtitle-desc">6 counts in each position</p>
+    </section>
+
+    <!-- Scoring Section Card (Level 1-3 vs Level 4-8) -->
+    <section class="card scoring-card">
+      
+      <!-- Level 1-3 Requirements Assessment Mode -->
+      <div id="level-1-3-container" class="scoring-mode-container">
+        <h2 class="card-title">📋 Requirement Evaluation</h2>
+
+        <div class="requirement-block" id="req-block-1">
+          <div class="req-number">Req 1</div>
+          <p class="req-text" id="req-text-1">Legs at/or above the water's surface throughout rotation</p>
+          <div class="toggle-group">
+            <button type="button" class="btn-toggle btn-pass" data-row="1" data-val="C">PASS (C)</button>
+            <button type="button" class="btn-toggle btn-nyc" data-row="1" data-val="NYC">NYC</button>
+          </div>
+        </div>
+
+        <div class="requirement-block" id="req-block-2">
+          <div class="req-number">Req 2</div>
+          <p class="req-text" id="req-text-2">The hips turn 180° around the vertical line, showing an angle of at least 135° in all splits</p>
+          <div class="toggle-group">
+            <button type="button" class="btn-toggle btn-pass" data-row="2" data-val="C">PASS (C)</button>
+            <button type="button" class="btn-toggle btn-nyc" data-row="2" data-val="NYC">NYC</button>
+          </div>
+        </div>
+
+        <div class="requirement-block" id="req-block-3">
+          <div class="req-number">Req 3</div>
+          <p class="req-text" id="req-text-3">Legs extended throughout the rotation</p>
+          <div class="toggle-group">
+            <button type="button" class="btn-toggle btn-pass" data-row="3" data-val="C">PASS (C)</button>
+            <button type="button" class="btn-toggle btn-nyc" data-row="3" data-val="NYC">NYC</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 4-8 Numeric Score Mode -->
+      <div id="level-4-8-container" class="scoring-mode-container hidden">
+        <h2 class="card-title">⭐ Enter Numeric Score (0.0 - 10.0)</h2>
+        <div class="numeric-input-wrapper">
+          <input type="number" id="input-numeric-score" min="0" max="10" step="0.1" placeholder="0.0" class="numeric-score-input">
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Assessor Comments Card -->
+    <section class="card comments-card">
+      <h2 class="card-title">💬 Assessor's Comments</h2>
+      <textarea id="assessor-comments" placeholder="Type comments for coach/swimmer..." rows="3" class="styled-textarea"></textarea>
+    </section>
+
+    <!-- Submit Action Button -->
+    <div class="action-bar">
+      <button type="button" id="btn-submit-score" class="btn-submit">
+        <span>📤 SUBMIT SCORE</span>
+      </button>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
