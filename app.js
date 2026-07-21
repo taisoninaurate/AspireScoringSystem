@@ -1,4 +1,4 @@
-// ASPIRE Mobile Web App - Focused Single Session Score Viewer
+// ASPIRE Mobile Web App - Bulletproof Laptop & Mobile Engine with Single Session Score Viewer
 document.addEventListener("DOMContentLoaded", function() {
 
   // Deployed Apps Script Web App Endpoint
@@ -127,11 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
   async function fetchLiveMasterData() {
     if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH GOOGLE SHEETS...";
     try {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "GET_INITIAL_DATA" })
-      });
+      const response = await fetch(APPS_SCRIPT_URL);
       const data = await response.json();
 
       if (data.status === "success") {
@@ -240,17 +236,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Fetch submitted scores for selected Athlete & Level
+  // Bulletproof GET fetch for submitted scores
   async function fetchAthleteSubmittedScores() {
     const level = parseInt(selectLevel.value) || 1;
     const athleteNo = parseInt(selectAthlete.value) || 1;
 
     try {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "GET_SCORES", level: level, athleteNo: athleteNo })
-      });
+      const getUrl = `${APPS_SCRIPT_URL}?action=GET_SCORES&level=${level}&athleteNo=${athleteNo}`;
+      const response = await fetch(getUrl);
       const data = await response.json();
 
       if (data.status === "success" && data.scores) {
@@ -390,42 +383,45 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Focused 1-Session View Score Handler
-  btnFetchScores.addEventListener("click", async function() {
-    const level = parseInt(selectLevel.value);
-    const judgeNo = parseInt(selectJudge.value);
-    const elemNo = parseInt(selectElement.value);
-    const athleteNo = parseInt(selectAthlete.value);
-    const judgeName = displayJudgeName.textContent;
+  // Focused 1-Session View Score Handler (Bulletproof Laptop & Desktop GET Request)
+  if (btnFetchScores) {
+    btnFetchScores.addEventListener("click", async function(e) {
+      if (e) e.preventDefault();
+      
+      const level = parseInt(selectLevel.value);
+      const judgeNo = parseInt(selectJudge.value);
+      const elemNo = parseInt(selectElement.value);
+      const athleteNo = parseInt(selectAthlete.value);
+      const judgeName = displayJudgeName.textContent;
 
-    modalTitle.textContent = `📊 Current Session Score Record`;
-    scoresModal.classList.remove("hidden");
-    modalScoresBody.innerHTML = `<div class="loading-spinner">Fetching score from Google Sheets...</div>`;
+      modalTitle.textContent = `📊 Session Score Record`;
+      scoresModal.classList.remove("hidden");
+      modalScoresBody.innerHTML = `<div class="loading-spinner" style="padding:20px; text-align:center; color:#94a3b8;">Fetching score from Google Sheets...</div>`;
 
-    try {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "GET_SCORES", level: level, athleteNo: athleteNo })
-      });
-      const data = await response.json();
+      try {
+        const getUrl = `${APPS_SCRIPT_URL}?action=GET_SCORES&level=${level}&athleteNo=${athleteNo}`;
+        const response = await fetch(getUrl);
+        const data = await response.json();
 
-      if (data.status === "success" && data.scores && data.scores[elemNo]) {
-        const elemData = data.scores[elemNo];
-        const judgeData = elemData[`j${judgeNo}`];
+        if (data.status === "success" && data.scores && data.scores[elemNo]) {
+          const elemData = data.scores[elemNo];
+          const judgeData = elemData[`j${judgeNo}`];
 
-        renderSingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo, judgeData);
-      } else {
-        renderEmptySingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo);
+          renderSingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo, judgeData);
+        } else {
+          renderEmptySingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo);
+        }
+      } catch (err) {
+        modalScoresBody.innerHTML = `<p style="color:#ef4444; padding:20px; text-align:center;">Failed to fetch score. Please check network connection.</p>`;
       }
-    } catch (err) {
-      modalScoresBody.innerHTML = `<p style="color:#ef4444; padding:20px;">Failed to fetch score. Please check network connection.</p>`;
-    }
-  });
+    });
+  }
 
-  btnCloseModal.addEventListener("click", function() {
-    scoresModal.classList.add("hidden");
-  });
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener("click", function() {
+      scoresModal.classList.add("hidden");
+    });
+  }
 
   function renderSingleScoreCard(level, judgeNo, judgeName, elemNo, athleteNo, judgeData) {
     let scoreDisplay = "";
