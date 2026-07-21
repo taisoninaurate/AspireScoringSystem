@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>ASPIRE Judges Mobile Scoring Portal</title>
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1b365d">
   <!-- Apple Mobile Web App Support -->
@@ -132,7 +132,7 @@
         <div id="level-4-8-container" class="scoring-mode-container hidden">
           <h2 class="card-title">⭐ Enter Numeric Score (0.0 - 10.0)</h2>
           <div class="numeric-input-wrapper">
-            <input type="number" id="input-numeric-score" min="0" max="10" step="0.1" placeholder="0.0" class="numeric-score-input">
+            <input type="number" id="input-numeric-score" min="0" max="10" step="0.1" placeholder="0.0" class="numeric-score-input" value="" autocomplete="off">
           </div>
         </div>
 
@@ -141,7 +141,7 @@
       <!-- Assessor Comments Card -->
       <section class="card comments-card">
         <h2 class="card-title">💬 Assessor's Comments</h2>
-        <textarea id="assessor-comments" placeholder="Type comments for coach/swimmer..." rows="3" class="styled-textarea"></textarea>
+        <textarea id="assessor-comments" placeholder="Type comments for coach/swimmer..." rows="3" class="styled-textarea" autocomplete="off"></textarea>
       </section>
 
       <!-- Submit Action Button -->
@@ -158,15 +158,15 @@
   <div id="scores-modal" class="modal-backdrop hidden">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 id="modal-title">📊 Submitted Scores for Athlete</h3>
+        <h3 id="modal-title">📊 Session Score Record</h3>
         <button type="button" id="btn-close-modal" class="btn-close">&times;</button>
       </div>
       <div class="modal-body" id="modal-scores-body">
-        <div class="loading-spinner">Loading submitted scores...</div>
+        <div class="loading-spinner">Loading score...</div>
       </div>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

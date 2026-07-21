@@ -1,4 +1,4 @@
-// ASPIRE Mobile Web App - Clean Inputs Mode (Main inputs remain blank, View Scores shows record)
+// ASPIRE Mobile Web App - Bulletproof Clean Inputs Engine (Cache-Busted v4)
 document.addEventListener("DOMContentLoaded", function() {
 
   // Deployed Apps Script Web App Endpoint
@@ -122,6 +122,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   let requirementStates = { 1: null, 2: null, 3: null };
 
+  // Explicitly clear main input fields on page load
+  resetMainScoringInputs();
+
   // 1. Fetch Dynamic Data from Google Apps Script Web API
   async function fetchLiveMasterData() {
     if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH GOOGLE SHEETS...";
@@ -201,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateJudgeName();
     updateManualCard();
     updateScoringMode();
-    resetMainScoringInputs(); // ALWAYS START BLANK FOR FRESH ENTRY!
+    resetMainScoringInputs(); // ALWAYS START 100% BLANK FOR FRESH ENTRY!
   }
 
   function updateJudgeName() {
@@ -238,8 +241,8 @@ document.addEventListener("DOMContentLoaded", function() {
   function resetMainScoringInputs() {
     requirementStates = { 1: null, 2: null, 3: null };
     document.querySelectorAll(".btn-toggle").forEach(btn => btn.classList.remove("active"));
-    inputNumericScore.value = "";
-    assessorComments.value = "";
+    if (inputNumericScore) inputNumericScore.value = "";
+    if (assessorComments) assessorComments.value = "";
   }
 
   function highlightToggle(row, val) {
