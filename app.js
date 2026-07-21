@@ -1,4 +1,4 @@
-// ASPIRE Mobile Web App - Bulletproof Laptop & Mobile Engine with Single Session Score Viewer
+// ASPIRE Mobile Web App - Clean Inputs Mode (Main inputs remain blank, View Scores shows record)
 document.addEventListener("DOMContentLoaded", function() {
 
   // Deployed Apps Script Web App Endpoint
@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
   let liveUniqueLevels = [];
   let liveJudgeMatrix = {};
   let liveSwimmerAssignments = {};
-  let currentAthleteSubmittedScores = {};
 
   // UI Element Selectors
   const selectLevel = document.getElementById("select-level");
@@ -202,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateJudgeName();
     updateManualCard();
     updateScoringMode();
-    fetchAthleteSubmittedScores();
+    resetMainScoringInputs(); // ALWAYS START BLANK FOR FRESH ENTRY!
   }
 
   function updateJudgeName() {
@@ -236,53 +235,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Bulletproof GET fetch for submitted scores
-  async function fetchAthleteSubmittedScores() {
-    const level = parseInt(selectLevel.value) || 1;
-    const athleteNo = parseInt(selectAthlete.value) || 1;
-
-    try {
-      const getUrl = `${APPS_SCRIPT_URL}?action=GET_SCORES&level=${level}&athleteNo=${athleteNo}`;
-      const response = await fetch(getUrl);
-      const data = await response.json();
-
-      if (data.status === "success" && data.scores) {
-        currentAthleteSubmittedScores = data.scores;
-        populateCurrentSubmittedScore(selectElement.value, selectJudge.value, level);
-      }
-    } catch (err) {
-      console.warn("Could not fetch submitted scores:", err);
-    }
-  }
-
-  function populateCurrentSubmittedScore(elemNo, judgeNo, level) {
-    const elemScores = currentAthleteSubmittedScores[elemNo];
-    if (!elemScores) return;
-
-    const judgeKey = `j${judgeNo}`;
-    const judgeData = elemScores[judgeKey];
-    if (!judgeData) return;
-
-    if (level <= 3) {
-      resetToggleButtons();
-      if (judgeData.r1 === "C" || judgeData.r1 === "Comp") highlightToggle(1, "C");
-      else if (judgeData.r1 === "NYC") highlightToggle(1, "NYC");
-
-      if (judgeData.r2 === "C" || judgeData.r2 === "Comp") highlightToggle(2, "C");
-      else if (judgeData.r2 === "NYC") highlightToggle(2, "NYC");
-
-      if (judgeData.r3 === "C" || judgeData.r3 === "Comp") highlightToggle(3, "C");
-      else if (judgeData.r3 === "NYC") highlightToggle(3, "NYC");
-
-      if (judgeData.comments) assessorComments.value = judgeData.comments;
-    } else {
-      if (judgeData.score !== undefined && judgeData.score !== "" && judgeData.score !== null) {
-        inputNumericScore.value = judgeData.score;
-      } else {
-        inputNumericScore.value = "";
-      }
-      if (judgeData.comments) assessorComments.value = judgeData.comments;
-    }
+  function resetMainScoringInputs() {
+    requirementStates = { 1: null, 2: null, 3: null };
+    document.querySelectorAll(".btn-toggle").forEach(btn => btn.classList.remove("active"));
+    inputNumericScore.value = "";
+    assessorComments.value = "";
   }
 
   function highlightToggle(row, val) {
@@ -298,13 +255,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  function resetToggleButtons() {
-    requirementStates = { 1: null, 2: null, 3: null };
-    document.querySelectorAll(".btn-toggle").forEach(btn => btn.classList.remove("active"));
-    assessorComments.value = "";
-    inputNumericScore.value = "";
-  }
-
   // Toggle button event handlers
   document.querySelectorAll(".btn-toggle").forEach(button => {
     button.addEventListener("click", function() {
@@ -314,18 +264,18 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  // Event Listeners for Dropdowns
+  // Event Listeners for Dropdowns (Always Reset Inputs to Blank)
   selectLevel.addEventListener("change", updateDropdowns);
   selectJudge.addEventListener("change", function() {
     updateJudgeName();
-    populateCurrentSubmittedScore(selectElement.value, selectJudge.value, selectLevel.value);
+    resetMainScoringInputs();
   });
   selectElement.addEventListener("change", function() {
     updateJudgeName();
     updateManualCard();
-    populateCurrentSubmittedScore(selectElement.value, selectJudge.value, selectLevel.value);
+    resetMainScoringInputs();
   });
-  selectAthlete.addEventListener("change", fetchAthleteSubmittedScores);
+  selectAthlete.addEventListener("change", resetMainScoringInputs);
 
   // Submit Score Handler
   btnSubmitScore.addEventListener("click", async function() {
@@ -365,12 +315,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
       if (resData.status === "success") {
         alert(`✅ Score for Athlete #${athleteNo} (Element ${elemNo}) submitted successfully!`);
-        resetToggleButtons();
+        resetMainScoringInputs();
         
         // Auto-advance to next athlete
         if (selectAthlete.selectedIndex < selectAthlete.options.length - 1) {
           selectAthlete.selectedIndex++;
-          fetchAthleteSubmittedScores();
+          resetMainScoringInputs();
         }
       } else {
         alert("⚠️ Submission Error: " + resData.message);
@@ -383,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Focused 1-Session View Score Handler (Bulletproof Laptop & Desktop GET Request)
+  // Focused 1-Session View Score Handler (Modal Shows Submitted Record)
   if (btnFetchScores) {
     btnFetchScores.addEventListener("click", async function(e) {
       if (e) e.preventDefault();
@@ -394,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function() {
       const athleteNo = parseInt(selectAthlete.value);
       const judgeName = displayJudgeName.textContent;
 
-      modalTitle.textContent = `📊 Session Score Record`;
+      modalTitle.textContent = `📊 Current Session Score Record`;
       scoresModal.classList.remove("hidden");
       modalScoresBody.innerHTML = `<div class="loading-spinner" style="padding:20px; text-align:center; color:#94a3b8;">Fetching score from Google Sheets...</div>`;
 
