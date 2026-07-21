@@ -1,8 +1,101 @@
-// ASPIRE Mobile Web App - 100% Complete Official Table Reference Database (Levels 1-8)
+// ASPIRE Mobile Web App - Bulletproof Master PIN Access Control (Zero localStorage)
 document.addEventListener("DOMContentLoaded", function() {
+
+  // ==============================================================================================
+  // MASTER COMPETITION PIN CONFIGURATION
+  // ----------------------------------------------------------------------------------------------
+  // Edit this 4-digit PIN anytime below! (Default: "2026")
+  const MASTER_COMPETITION_PIN = "2026";
+  // ==============================================================================================
 
   // Deployed Apps Script Web App Endpoint
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4O2eHnkm1eZ3ZUJbLcWIATH1te02Aheul-Ox8jtLn-AtrlFtQqLmgbvRtr7W6ab9p4w/exec";
+
+  // PIN Overlay UI Elements
+  const pinLockOverlay = document.getElementById("pin-lock-overlay");
+  const pinCardBox = document.getElementById("pin-card-box");
+  const pinErrorMsg = document.getElementById("pin-error-msg");
+  const keyButtons = document.querySelectorAll(".key-btn[data-key]");
+  const keyClearBtn = document.getElementById("key-clear");
+  const keyDelBtn = document.getElementById("key-del");
+
+  let enteredPin = "";
+
+  function updatePinDots() {
+    for (let i = 0; i < 4; i++) {
+      const dot = document.getElementById(`dot-${i}`);
+      if (dot) {
+        if (i < enteredPin.length) dot.classList.add("filled");
+        else dot.classList.remove("filled");
+      }
+    }
+  }
+
+  function handleDigitInput(digit) {
+    if (enteredPin.length < 4) {
+      enteredPin += digit;
+      updatePinDots();
+      if (pinErrorMsg) pinErrorMsg.classList.add("hidden");
+    }
+
+    if (enteredPin.length === 4) {
+      setTimeout(() => {
+        if (enteredPin === MASTER_COMPETITION_PIN) {
+          // Success: Unlock portal for this active session (NO localStorage used!)
+          if (pinLockOverlay) pinLockOverlay.classList.add("hidden");
+          enteredPin = "";
+          updatePinDots();
+        } else {
+          // Failure: Shake & Error
+          if (pinErrorMsg) pinErrorMsg.classList.remove("hidden");
+          if (pinCardBox) {
+            pinCardBox.classList.add("pin-error");
+            setTimeout(() => pinCardBox.classList.remove("pin-error"), 400);
+          }
+          enteredPin = "";
+          updatePinDots();
+        }
+      }, 150);
+    }
+  }
+
+  function deleteLastDigit() {
+    if (enteredPin.length > 0) {
+      enteredPin = enteredPin.slice(0, -1);
+      updatePinDots();
+      if (pinErrorMsg) pinErrorMsg.classList.add("hidden");
+    }
+  }
+
+  function clearPinInput() {
+    enteredPin = "";
+    updatePinDots();
+    if (pinErrorMsg) pinErrorMsg.classList.add("hidden");
+  }
+
+  // Keypad Click Listeners
+  keyButtons.forEach(btn => {
+    btn.addEventListener("click", function() {
+      const k = this.getAttribute("data-key");
+      if (k) handleDigitInput(k);
+    });
+  });
+
+  if (keyDelBtn) keyDelBtn.addEventListener("click", deleteLastDigit);
+  if (keyClearBtn) keyClearBtn.addEventListener("click", clearPinInput);
+
+  // Physical Keyboard Listener (for laptops / desktops)
+  document.addEventListener("keydown", function(e) {
+    if (pinLockOverlay && !pinLockOverlay.classList.contains("hidden")) {
+      if (e.key >= "0" && e.key <= "9") {
+        handleDigitInput(e.key);
+      } else if (e.key === "Backspace") {
+        deleteLastDigit();
+      } else if (e.key === "Escape" || e.key === "c" || e.key === "C") {
+        clearPinInput();
+      }
+    }
+  });
 
   // Official ASPIRE Reference Table Transcribed directly from Master Google Sheet
   const ELEMENTS_DATABASE = {
