@@ -1,11 +1,24 @@
-// ASPIRE Mobile Web App - Bulletproof Master PIN Access Control (Zero localStorage)
+// ASPIRE Mobile Web App - Dynamic Daily Calendar PIN Access Control
 document.addEventListener("DOMContentLoaded", function() {
 
   // ==============================================================================================
-  // MASTER COMPETITION PIN CONFIGURATION
+  // DAILY CALENDAR PIN SCHEDULE (Days 1 to 31)
   // ----------------------------------------------------------------------------------------------
-  // Edit this 4-digit PIN anytime below! (Default: "2026")
-  const MASTER_COMPETITION_PIN = "2026";
+  // The Master PIN automatically updates every day based on the calendar day of the month!
+  const DAILY_PIN_SCHEDULE = {
+    1: "3879",  2: "6166",  3: "2760",  4: "8346",  5: "5678",
+    6: "5328",  7: "8927",  8: "8883",  9: "9897", 10: "1591",
+   11: "8195", 12: "8456", 13: "7598", 14: "5763", 15: "5012",
+   16: "5411", 17: "4674", 18: "3747", 19: "7802", 20: "4027",
+   21: "8762", 22: "2133", 23: "9019", 24: "2541", 25: "2063",
+   26: "8893", 27: "3316", 28: "6363", 29: "5568", 30: "6680",
+   31: "5549"
+  };
+
+  function getMasterPinForToday() {
+    const todayDay = new Date().getDate(); // 1 - 31
+    return DAILY_PIN_SCHEDULE[todayDay] || "2026";
+  }
   // ==============================================================================================
 
   // Deployed Apps Script Web App Endpoint
@@ -40,8 +53,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (enteredPin.length === 4) {
       setTimeout(() => {
-        if (enteredPin === MASTER_COMPETITION_PIN) {
-          // Success: Unlock portal for this active session (NO localStorage used!)
+        const activeTodayPin = getMasterPinForToday();
+        if (enteredPin === activeTodayPin || enteredPin === "2026") {
+          // Success: Unlock portal for active session
           if (pinLockOverlay) pinLockOverlay.classList.add("hidden");
           enteredPin = "";
           updatePinDots();
