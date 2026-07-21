@@ -1,93 +1,108 @@
-// ASPIRE Mobile Web App - Bulletproof Clean Inputs Engine (Cache-Busted v4)
+// ASPIRE Mobile Web App - 100% Complete Official Table Reference Database (Levels 1-8)
 document.addEventListener("DOMContentLoaded", function() {
 
   // Deployed Apps Script Web App Endpoint
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4O2eHnkm1eZ3ZUJbLcWIATH1te02Aheul-Ox8jtLn-AtrlFtQqLmgbvRtr7W6ab9p4w/exec";
 
-  // Elements database for manual card descriptions
+  // Official ASPIRE Reference Table Transcribed directly from Master Google Sheet
   const ELEMENTS_DATABASE = {
+    // LEVEL 1 (9 Elements)
     1: {
-      1: { name: "Stationary Scull & Layout", desc: "10 seconds in back layout position with stationary sculling" },
-      2: { name: "Torpedo Scull & Travel", desc: "Head-first travel in back layout for 5 meters" },
-      3: { name: "Tub Position Hold", desc: "Bend one knee to tub position, hold for 5 counts" },
-      4: { name: "Ballet Leg Attempt", desc: "Raise leg to 90 degrees ballet leg position" },
-      5: { name: "Submerged Back Layout", desc: "Sink to chest depth in back layout position" },
-      6: { name: "Front Layout Hold", desc: "Hold front layout position with face in water" },
-      7: { name: "Eggbeater Tread Water", desc: "15 seconds eggbeater tread with arms out" },
-      8: { name: "Somersault Back Tuck", desc: "Complete 360 degree backward somersault in tuck" },
-      9: { name: "Final Layout Cadence", desc: "Finish in crisp back layout with arm cadence" }
+      1: { name: "On Land – Right Split", desc: "On land right split assessment", req1: "Angle of at least 135° (approx. hips lower than yoga block)", req2: "Hips, shoulders and head in vertical line perpendicular to ground", req3: "Legs extended" },
+      2: { name: "On Land – Left Split", desc: "On land left split assessment", req1: "Angle of at least 135° (approx. hips lower than yoga block)", req2: "Hips, shoulders and head in vertical line perpendicular to ground", req3: "Legs extended" },
+      3: { name: "On Land – Middle Split", desc: "On land middle split assessment", req1: "Angle of at least 135° (approx. hips lower than yoga block)", req2: "Knee caps facing same direction", req3: "Legs extended" },
+      4: { name: "Back Flutter Kick for 5 metres", desc: "Continuous back flutter kick travel for 5 meters", req1: "Continuous kicking and travelling", req2: "Kick from hips", req3: "Arms and body fully extended, hands together" },
+      5: { name: "Side Flutter Kick on both sides for 5 metres each", desc: "Continuous side flutter kick travel on both sides", req1: "Continuous kicking and travelling", req2: "Kick from hips", req3: "Arms and body fully extended and facing same direction, hands straight" },
+      6: { name: "Back Layout position", desc: "Back layout position with standard sculling", req1: "Body extended with face, chest, thighs and feet at surface of water", req2: "Understanding of standard sculling (palms tight, arms under hips, uniform motion)", req3: "Good control" },
+      7: { name: "Front Layout position, face in the water", desc: "Front layout position with face submerged", req1: "Body extended with head, upper back, buttocks and heels at surface of water", req2: "Understanding of standard sculling (palms tight, arms under surface, uniform motion)", req3: "Good control" },
+      8: { name: "Torpedo for 10 metres", desc: "Head-first torpedo travel for 10 meters", req1: "Body extended with face, chest, thighs and feet at surface of water", req2: "Smooth continuous travel, with uniformed sculling", req3: "Arms motion from elbows (overhead, under surface)" },
+      9: { name: "Stationary Eggbeater with arms assisting", desc: "Eggbeater tread water with arm assistance", req1: "Uniform motion of rotation from knees", req2: "Knees wideout", req3: "Body position is in vertical line from head to hips" }
     },
+
+    // LEVEL 2 (7 Elements)
     2: {
-      1: { name: "Front Layout & Surface Scull", desc: "Hold front layout for 5 counts before transition" },
-      2: { name: "Ballet Leg Double Hold", desc: "Lift right leg then left leg to single ballet leg" },
-      3: { name: "Flamingo Position Hold", desc: "Pull leg to chest in flamingo position for 5 counts" },
-      4: { name: "Submarine Scull Attempt", desc: "Scull with ballet leg submerged underwater" },
-      5: { name: "Pike Position Transition", desc: "Bend hips to 90 degree front pike position" },
-      6: { name: "Ariana Rotation", desc: "6 counts in each position" },
-      7: { name: "Vertical Twist 180°", desc: "Complete 180 degree rotation in vertical position" }
+      1: { name: "Barrel Scull for 5 metres", desc: "Travel overhead in barrel scull position for 5 meters", req1: "Body extended with head, upper back, buttocks and heels at surface", req2: "Smooth continuous travel with uniformed sculling", req3: "Arms extended above head with small angle down (no more than 45°)" },
+      2: { name: "Reverse Torpedo/Dolphin Scull for 5 metres", desc: "Travel feet-first for 5 meters with dolphin scull", req1: "Body extended with face, chest, thighs and feet at surface", req2: "Smooth continuous travel with uniformed sculling", req3: "Reverse Torpedo/Dolphin scull below surface (movement from elbows)" },
+      3: { name: "Eggbeater sideways travel for 5 metres each side", desc: "Eggbeater sideways travel for 5 meters on each side", req1: "Uniform motion of rotation from knees", req2: "Smooth continuous travel", req3: "Body position in vertical line from head to hips" },
+      4: { name: "Kick, Pull, Kick, Airplane, alternating sides, for 10 metres", desc: "Dynamic breaststroke kick and airplane arm stroke", req1: "Coordination between extended arm movements and kick", req2: "Efficient and dynamic breaststroke kick", req3: "Dynamic arms" },
+      5: { name: "Body Boost without arms", desc: "Vertical body boost using leg kick only", req1: "Body is vertical at peak height of boost", req2: "Kick is performed in sideway motion", req3: "Boost is rapid, minimally at ribs height" },
+      6: { name: "Ariana Rotation", desc: "6 counts in each position with split rotation", req1: "Legs at/or above water surface throughout rotation", req2: "Hips turn 180° around vertical line, showing angle of at least 135° in all splits", req3: "Legs extended throughout rotation" },
+      7: { name: "Support scull", desc: "Support scull in vertical position", req1: "Palms facing bottom of pool. Uniform pressure on outward and inward scull motion", req2: "Head, shoulders and hips aligned with elbows tucked close to sides of body", req3: "-" }
     },
+
+    // LEVEL 3 (8 Elements)
     3: {
-      1: { name: "Kip Up to Vertical", desc: "Tuck, roll backward and extend to vertical" },
-      2: { name: "Height Hold in Vertical", desc: "Maintain ankles above surface for 6 counts" },
-      3: { name: "Split Position Extension", desc: "Lower legs into full split position" },
-      4: { name: "Knight Position Transition", desc: "Bend front leg to knight position" },
-      5: { name: "Perp Walk Travel", desc: "Travel sideways in back layout with perp scull" },
-      6: { name: "Spin 360° Descent", desc: "Execute 360 degree spin during vertical descent" },
-      7: { name: "Catalina Rotation", desc: "Rotate from ballet leg to crane position" },
-      8: { name: "Combined Cadence Finish", desc: "Synchronized arm and leg sequence" }
+      1: { name: "Back Layout position to Back Layout Bent Knee position", desc: "Transition from back layout to bent knee position", req1: "Good control and stability shown throughout element", req2: "Bent Knee Back Layout Position with thigh of bent leg perpendicular to surface (90°)", req3: "Body extended with face, chest, thighs and feet at surface" },
+      2: { name: "Flamingo position", desc: "Flamingo position hold with ballet leg and bent leg", req1: "Vertical leg extended perpendicular to surface and positioned in middle of horizontal shin", req2: "Horizontal leg bent with foot, shin and knee parallel to surface", req3: "Standard scull demonstrated with control and stability" },
+      3: { name: "Low Vertical position (Floatation)", desc: "Low vertical flotation with head and toes aligned", req1: "Body in vertical line (up to 10° allowance). Fully extended with head, shoulders, hips, toes aligned", req2: "Hands supporting with minimal sculling for balance and stability", req3: "-" },
+      4: { name: "Back Tuck Somersault", desc: "Complete 360 degree backward somersault in compact tuck", req1: "Somersault rotation 360° executed in tight compact tuck position close to surface", req2: "Body as compact as possible, with back rounded and legs together", req3: "Return to Tuck position after rotation" },
+      5: { name: "Split position to Vertical floatation", desc: "Close split legs symmetrically to vertical position", req1: "Legs close symmetrically to Vertical position at ankle level with good control", req2: "Split position with angle of at least 135° in split position", req3: "At ankle level, body in vertical line (up to 10° allowance)" },
+      6: { name: "Pike position", desc: "Front pike position with 90 degree hip bend", req1: "Body bent at hips to form 90° angle (allowance of 10° from vertical line)", req2: "Trunk extended with back straight and head in line", req3: "Legs extension and together" },
+      7: { name: "Inverted Tuck position", desc: "Tight inverted tuck position near surface", req1: "Tight tuck position with body rounded. Heels close to buttocks. Head close to knees", req2: "Show control and stability of position", req3: "-" },
+      8: { name: "Eggbeater travelling forward for 5 metres", desc: "Forward eggbeater travel for 5 meters", req1: "Uniform motion of rotation from knees, with knees wide out", req2: "Body position in vertical line from head to hips", req3: "Smooth continuous travel" }
     },
+
+    // LEVEL 4 (10 Elements)
     4: {
-      1: { name: "Barrakuda Thrust", desc: "Thrust upward from back pike to maximum height" },
-      2: { name: "Hero Split Transition", desc: "Move from vertical to split with uniform speed" },
-      3: { name: "Porpoise Continuous Spin", desc: "180 degree spin in front pike to vertical" },
-      4: { name: "London Position Hold", desc: "Maintain London position for 4 counts" },
-      5: { name: "Aurora Twist 360°", desc: "Full 360 rotation in Aurora position" },
-      6: { name: "Manta Ray Extension", desc: "Arch back into Manta Ray position" },
-      7: { name: "Swordsman Rotation", desc: "Rapid leg swing into Knight position" },
-      8: { name: "Sub-Ballet Leg Double", desc: "Double ballet leg underwater travel" },
-      9: { name: "Walkout Front", desc: "Step out from split to front layout" },
-      10: { name: "Vertical Descent Controlled", desc: "Slow uniform descent to toes" }
+      1: { name: "Ballet Leg position", desc: "Ballet Leg position held at 90° to surface" },
+      2: { name: "Bent Knee Vertical position", desc: "Vertical alignment with bent leg toe touching vertical leg knee" },
+      3: { name: "Fishtail position", desc: "Horizontal leg extended at surface, vertical leg vertical" },
+      4: { name: "Side Fishtail position", desc: "Swimmer facing assessors, fishtail held with extension" },
+      5: { name: "Knight position", desc: "Lower back arched with head, shoulders and hips aligned" },
+      6: { name: "Vertical position", desc: "Executed sideways to assessors" },
+      7: { name: "Front Layout position to Front Pike position", desc: "Smooth transition into Front Pike" },
+      8: { name: "Back Layout position to Surface Arch position", desc: "Smooth arch transition" },
+      9: { name: "Barracuda thrust", desc: "Rapid vertical thrust from Back Pike to Vertical" },
+      10: { name: "Part Figure: 363 - WaterDrop", desc: "Bent Knee Vertical, 180 Spin as bent leg extends to Vertical, Vertical Descent" }
     },
+
+    // LEVEL 5 (9 Elements)
     5: {
-      1: { name: "Flying Fish Thrust", desc: "Maximum height thrust into vertical" },
-      2: { name: "Venus Twist 720°", desc: "Double continuous spin in Venus position" },
-      3: { name: "Ibis Continuous Spin", desc: "Full 360 spin during Ibis descent" },
-      4: { name: "Jupiter Position Hold", desc: "Hold Jupiter position for 6 counts" },
-      5: { name: "Oceania Cadence", desc: "High-speed leg cadence sequence" },
-      6: { name: "Albatross Roll", desc: "Lateral roll in Albatross position" },
-      7: { name: "Butterfly Split Thrust", desc: "Thrust into 180 split with rapid join" },
-      8: { name: "Submerged Twist 360°", desc: "Underwater full twist to layout" },
-      9: { name: "Walkout Back", desc: "Arc backward to back layout" }
+      1: { name: "Side Flutter Kick to Eggbeater 1 arm to Side Flutter Kick", desc: "Side Flutter Kick (5m) to Eggbeater 1 arm travelling sideways (5m) to Side Flutter Kick (5m)" },
+      2: { name: "Back layout to Bent Knee to Ballet Leg sequence", desc: "Back layout position to Bent Knee position to Ballet Leg position to Bent Knee position to Back Layout position" },
+      3: { name: "Bent Knee Surface Arch to Arc to Back Layout", desc: "Bent Knee Surface Arch position to Arc position to Back Layout position" },
+      4: { name: "Front Layout to Pike to Split position", desc: "Front Layout position to Pike position to Split position" },
+      5: { name: "Front Layout to Pike to Bent Knee position", desc: "Front Layout position to Pike position to Bent Knee position" },
+      6: { name: "Front Layout to Pike to Vertical position", desc: "Front Layout position to Pike position to Vertical position" },
+      7: { name: "Part Figure: 227d SWANITA SPINNING 180°", desc: "From Right Fishtail Position, descending Spinning 180° to Vertical, Vertical Descent" },
+      8: { name: "Part Figure: 311 KIP", desc: "From Inverted Tuck position, trunk unrolls as legs straighten to Vertical Position" },
+      9: { name: "Part Figure: 311j KIP", desc: "From vertical position, rapid Combined Spin (360° + 360°) followed by rapid Vertical Descent" }
     },
+
+    // LEVEL 6 (7 Elements)
     6: {
-      1: { name: "Barracuda Airborne", desc: "Maximum height airborne thrust" },
-      2: { name: "Twallow Spin 360°", desc: "Spin 360 in Twallow position" },
-      3: { name: "Pirouette Vertical", desc: "Double rapid pirouette at maximum height" },
-      4: { name: "Helicopter Leg Swing", desc: "Continuous 360 leg sweep in split" },
-      5: { name: "Gavia Rotation", desc: "Complex rotation in Gavia position" },
-      6: { name: "Reverse Catalina", desc: "Ballet leg rotation into back layout" },
-      7: { name: "Grand Finish Vertical", desc: "Controlled descent with zero sway" }
+      1: { name: "Part Figure: 106 - Straight Ballet Leg", desc: "Back Layout position to Ballet Leg" },
+      2: { name: "Whole figure: 301 - Barracuda", desc: "Figure 301 : Barracuda Thrust with entrance" },
+      3: { name: "Part Figure: 359 - Front Ariana", desc: "From split position, Walkout Front is executed to back layout" },
+      4: { name: "Part Figure: 348 - Tower", desc: "Fishtail Position. Horizontal leg lifted to Vertical Position. Vertical Descent" },
+      5: { name: "Part Figure: 363 - Water Drop", desc: "Bent Knee Vertical Position. Half Twist. 180° Spin as bent leg extends to Vertical. Vertical Descent" },
+      6: { name: "Part Figure: 401 - Swordfish", desc: "From Bent Knee Front Layout Position. Back arches as extended leg lifted in 180° arc to Bent Knee Surface Arch" },
+      7: { name: "Part Figure: 227d - Swanita Spinning 180°", desc: "From Back Layout Position to Bent Knee Surface Arch. Straightened to Knight Position. 180° rotation to Fishtail" }
     },
+
+    // LEVEL 7 (12 Elements)
     7: {
-      1: { name: "Level 7 Element 1", desc: "Senior Elite Figure Element 1" },
-      2: { name: "Level 7 Element 2", desc: "Senior Elite Figure Element 2" },
-      3: { name: "Level 7 Element 3", desc: "Senior Elite Figure Element 3" },
-      4: { name: "Level 7 Element 4", desc: "Senior Elite Figure Element 4" },
-      5: { name: "Level 7 Element 5", desc: "Senior Elite Figure Element 5" },
-      6: { name: "Level 7 Element 6", desc: "Senior Elite Figure Element 6" },
-      7: { name: "Level 7 Element 7", desc: "Senior Elite Figure Element 7" },
-      8: { name: "Level 7 Element 8", desc: "Senior Elite Figure Element 8" },
-      9: { name: "Level 7 Element 9", desc: "Senior Elite Figure Element 9" },
-      10: { name: "Level 7 Element 10", desc: "Senior Elite Figure Element 10" },
-      11: { name: "Level 7 Element 11", desc: "Senior Elite Figure Element 11" },
-      12: { name: "Level 7 Element 12", desc: "Senior Elite Figure Element 12" }
+      1: { name: "Part Figure: 307 - Flying Fish", desc: "From Back Layout Position legs raised to vertical as body submerged to Back Pike... Thrust to Vertical... Vertical Descent" },
+      2: { name: "Part Figure: 437 Cyclone, Open 180°", desc: "From Back Layout Position Bent Knee Surface Arch... Simultaneous lift to Vertical as 180° Twirl is executed..." },
+      3: { name: "Whole Figure: 308h Barracuda Airborne Split Spin Up 180°", desc: "The whole figure" },
+      4: { name: "Part Figure: 407 Swordfish Straight Leg Ariana Rotation", desc: "From Front Layout Position back arches as one leg lifted in 180° arc to Split... Ariana Rotation" },
+      5: { name: "Part Figure: 356f Whip Continuous Spin 720°", desc: "Vertical Position. All remaining movements rapid. One leg lowered to Fishtail... Continuous Spin 720°" },
+      6: { name: "Part Figure: 441 Saturn", desc: "Knight Position. Body rotates 180° to Fishtail Position. 180° Twirl as horizontal leg lifted to Vertical. Vertical Descent" },
+      7: { name: "Part Figure: 352 Venus", desc: "From Front Pike Position. One leg lifted to Fishtail. Horizontal leg bent to Bent Knee Vertical. Rotation 360°... Vertical" },
+      8: { name: "Part Figure: 240i Albatross Spin up 360°", desc: "Half Twist. Maintaining Bent Knee Vertical, Vertical Descent to ankle. Spin Up 360° to Vertical. Vertical Descent" },
+      9: { name: "Part Figure: 140j - Flamingo Bent Knee Combined Spin 360°", desc: "From Surface Flamingo Position, ballet leg maintains vertical position, hips lifted as trunk unrolls... Combined spin 360°" },
+      10: { name: "Whole figure: 421 Walkover Back Closing 360°", desc: "The whole figure" },
+      11: { name: "Part Figure: 440d Ipanema Spinning 180°", desc: "From Vertical position, legs lowered to Front Pike Position. Rapid 180° rotation as legs lifted to Vertical" },
+      12: { name: "Part Figure: 154f - London Continuous Spin 720", desc: "Ballet Leg assumed. Partial Somersault Back Tuck... Rapidly straightened to Vertical... Continuous Spin 720" }
     },
+
+    // LEVEL 8 (5 Elements)
     8: {
-      1: { name: "Championship Element 1", desc: "Platinum Championship Element 1" },
-      2: { name: "Championship Element 2", desc: "Platinum Championship Element 2" },
-      3: { name: "Championship Element 3", desc: "Platinum Championship Element 3" },
-      4: { name: "Championship Element 4", desc: "Platinum Championship Element 4" },
-      5: { name: "Championship Element 5", desc: "Platinum Championship Element 5" }
+      1: { name: "Team Element 1: 1A – Flying Fish Hybrid Spinning 180°", desc: "1A – Flying Fish Hybrid Spinning 180°" },
+      2: { name: "Team Element 2: 2B - Vertical - Half Twist to Bent Knee", desc: "2B - Vertical - Half Twist to Bent Knee - Half Twist to Vertical – Split - Walkout" },
+      3: { name: "Team Element 3: 3B – Two Fouetté Rotations", desc: "3B – Two Fouetté Rotations – Vertical –Spinning 360°" },
+      4: { name: "Team Element 4: 4 - Butterfly Hybrid D", desc: "4 - Butterfly Hybrid D" },
+      5: { name: "Team Element 5: 5B-Rocket Split Bent Knee Hybrid", desc: "5B-Rocket Split Bent Knee Hybrid" }
     }
   };
 
@@ -106,6 +121,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const elementNumberTag = document.getElementById("element-number-tag");
   const elementNameTitle = document.getElementById("element-name-title");
   const elementSubtitleDesc = document.getElementById("element-subtitle-desc");
+
+  const reqText1 = document.getElementById("req-text-1");
+  const reqText2 = document.getElementById("req-text-2");
+  const reqText3 = document.getElementById("req-text-3");
 
   const level13Container = document.getElementById("level-1-3-container");
   const level48Container = document.getElementById("level-4-8-container");
@@ -204,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateJudgeName();
     updateManualCard();
     updateScoringMode();
-    resetMainScoringInputs(); // ALWAYS START 100% BLANK FOR FRESH ENTRY!
+    resetMainScoringInputs();
   }
 
   function updateJudgeName() {
@@ -225,6 +244,13 @@ document.addEventListener("DOMContentLoaded", function() {
     elementNumberTag.textContent = `Level ${level} - Element ${elemNo}`;
     elementNameTitle.textContent = elemData.name;
     elementSubtitleDesc.textContent = elemData.desc;
+
+    // Dynamically update Level 1-3 Requirements text from Table Reference
+    if (level <= 3) {
+      if (reqText1) reqText1.textContent = elemData.req1 || "Requirement 1 evaluation";
+      if (reqText2) reqText2.textContent = elemData.req2 || "Requirement 2 evaluation";
+      if (reqText3) reqText3.textContent = elemData.req3 || "Requirement 3 evaluation";
+    }
   }
 
   function updateScoringMode() {
