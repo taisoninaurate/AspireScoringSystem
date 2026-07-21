@@ -35,10 +35,10 @@ body {
 /* App Header */
 .app-header {
   background: linear-gradient(135deg, #1b365d 0%, #0d1b2a 100%);
-  padding: 16px 24px;
+  padding: 16px 32px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   border-bottom: 1px solid var(--card-border);
   position: sticky;
   top: 0;
@@ -60,14 +60,14 @@ body {
 
 .header-titles h1 {
   font-family: var(--font-heading);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: #ffffff;
 }
 
 .sub-badge {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #34d399;
   letter-spacing: 0.5px;
@@ -95,7 +95,7 @@ body {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 18px;
+  padding: 20px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
 }
 
@@ -113,8 +113,8 @@ body {
 .grid-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
 .form-group {
@@ -124,7 +124,7 @@ body {
 }
 
 .form-group label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-muted);
 }
@@ -134,37 +134,37 @@ body {
   color: #ffffff;
   border: 1.5px solid #233754;
   border-radius: var(--radius-md);
-  padding: 12px 14px;
-  font-size: 15px;
+  padding: 14px 16px;
+  font-size: 16px;
   font-weight: 600;
   outline: none;
   width: 100%;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
+  background-position: right 14px center;
+  background-size: 18px;
 }
 
 .judge-name-box {
   background-color: rgba(251, 191, 36, 0.1);
   border: 1px solid rgba(251, 191, 36, 0.3);
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: var(--radius-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .judge-label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--accent-gold);
 }
 
 .judge-value {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   color: #ffffff;
 }
@@ -172,29 +172,29 @@ body {
 /* Manual Card */
 .manual-card {
   background: linear-gradient(135deg, #132238 0%, #111c30 100%);
-  border-left: 4px solid var(--accent-gold);
+  border-left: 5px solid var(--accent-gold);
 }
 
 .element-tag {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--accent-gold);
   text-transform: uppercase;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .element-name {
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: #ffffff;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .element-subtitle {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* Requirements & Scoring */
@@ -202,34 +202,34 @@ body {
   background-color: #0b1424;
   border: 1px solid #1c2b42;
   border-radius: var(--radius-md);
-  padding: 14px;
-  margin-bottom: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
 }
 
 .req-number {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--primary);
   text-transform: uppercase;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .req-text {
-  font-size: 14px;
+  font-size: 15px;
   color: #e2e8f0;
-  line-height: 1.4;
-  margin-bottom: 12px;
+  line-height: 1.5;
+  margin-bottom: 14px;
 }
 
 .toggle-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-toggle {
-  padding: 12px;
-  font-size: 14px;
+  padding: 14px;
+  font-size: 15px;
   font-weight: 800;
   border-radius: var(--radius-md);
   border: 1.5px solid #233754;
@@ -257,19 +257,19 @@ body {
 .numeric-input-wrapper {
   display: flex;
   justify-content: center;
-  padding: 10px 0;
+  padding: 14px 0;
 }
 
 .numeric-score-input {
-  width: 140px;
-  height: 70px;
+  width: 160px;
+  height: 80px;
   font-family: var(--font-heading);
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 800;
   text-align: center;
   background-color: #0b1424;
   color: var(--accent-gold);
-  border: 2px solid var(--primary);
+  border: 2.5px solid var(--primary);
   border-radius: var(--radius-lg);
   outline: none;
 }
@@ -280,8 +280,8 @@ body {
   color: #ffffff;
   border: 1.5px solid #233754;
   border-radius: var(--radius-md);
-  padding: 12px;
-  font-size: 14px;
+  padding: 14px;
+  font-size: 15px;
   outline: none;
   resize: none;
 }
@@ -304,11 +304,11 @@ body {
 .btn-submit {
   width: 100%;
   max-width: 460px;
-  height: 54px;
+  height: 56px;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: #ffffff;
   font-family: var(--font-heading);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.5px;
   border: none;
@@ -327,7 +327,7 @@ body {
 }
 
 /* ==========================================================================
-   DYNAMIC RESPONSIVE MEDIA QUERIES (TABLETS / LANDSCAPE / LAPTOPS)
+   MAXIMISED FULL-WIDTH RESPONSIVE LAYOUT FOR LAPTOPS, TABLETS & DESKTOPS
    ========================================================================== */
 @media (min-width: 768px) {
   body {
@@ -335,12 +335,33 @@ body {
   }
 
   .app-container {
-    max-width: 1100px !important;
+    max-width: 100% !important;
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 24px !important;
+    gap: 32px !important;
     align-items: start;
-    padding: 24px;
+    padding: 32px 48px !important;
+  }
+
+  .card {
+    padding: 26px !important;
+  }
+
+  .card-title {
+    font-size: 17px !important;
+  }
+
+  .element-name {
+    font-size: 26px !important;
+  }
+
+  .element-subtitle {
+    font-size: 16px !important;
+  }
+
+  .styled-select {
+    height: 54px !important;
+    font-size: 17px !important;
   }
 
   .action-bar {
@@ -349,12 +370,12 @@ body {
     border-top: none !important;
     padding: 0 !important;
     backdrop-filter: none !important;
-    margin-top: 10px !important;
+    margin-top: 14px !important;
   }
 
   .btn-submit {
     max-width: 100% !important;
-    height: 60px !important;
-    font-size: 18px !important;
+    height: 64px !important;
+    font-size: 20px !important;
   }
 }
