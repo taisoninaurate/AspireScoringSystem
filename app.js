@@ -251,9 +251,9 @@ document.addEventListener("DOMContentLoaded", function() {
   // Explicitly clear main input fields on page load
   resetMainScoringInputs();
 
-  // 1. Fetch Dynamic Data from Google Apps Script Web API
+  // 1. Fetch Dynamic Data from Database Web API
   async function fetchLiveMasterData() {
-    if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH GOOGLE DATABASE...";
+    if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH DATABASE...";
     try {
       const response = await fetch(APPS_SCRIPT_URL);
       const data = await response.json();
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
         populateLevelDropdown();
       }
     } catch (err) {
-      console.warn("Could not connect to live Apps Script:", err);
+      console.warn("Could not connect to live database:", err);
       if (liveStatusBadge) liveStatusBadge.textContent = "● OFFLINE / MANUAL MODE";
     }
   }
