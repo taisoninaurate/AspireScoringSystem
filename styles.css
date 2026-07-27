@@ -71,10 +71,11 @@ body {
 }
 
 .pin-card-logo {
-  height: 64px;
+  display: block;
+  margin: 0 auto 16px auto;
+  height: clamp(50px, 8vh, 72px);
   width: auto;
   border-radius: 12px;
-  margin-bottom: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
