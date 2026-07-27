@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // 1. Fetch Dynamic Data from Google Apps Script Web API
   async function fetchLiveMasterData() {
-    if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH GOOGLE SHEETS...";
+    if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH GOOGLE DATABASE...";
     try {
       const response = await fetch(APPS_SCRIPT_URL);
       const data = await response.json();
@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (data.judgeMatrix) liveJudgeMatrix = data.judgeMatrix;
         if (data.swimmerAssignments) liveSwimmerAssignments = data.swimmerAssignments;
 
-        if (liveStatusBadge) liveStatusBadge.textContent = "● LIVE GOOGLE SHEETS SYNCED";
+        if (liveStatusBadge) liveStatusBadge.textContent = "● LIVE DATABASE SYNCED";
         populateLevelDropdown();
       }
     } catch (err) {

@@ -72,9 +72,10 @@ body {
 
 .pin-card-logo {
   display: block;
-  margin: 0 auto 16px auto;
-  height: clamp(50px, 8vh, 72px);
-  width: auto;
+  margin: 0 auto 20px auto;
+  width: 160px; /* Clean, compact width matching the keypad design */
+  max-width: 80%; /* Prevents any overspill */
+  height: auto; /* Scaled proportionally */
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
