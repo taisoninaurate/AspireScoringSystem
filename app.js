@@ -1,25 +1,5 @@
-// ASPIRE Mobile Web App - Dynamic Daily Calendar PIN Access Control
+// ASPIRE Mobile Web App - Secured Daily Calendar PIN & Endpoints
 document.addEventListener("DOMContentLoaded", function() {
-
-  // ==============================================================================================
-  // DAILY CALENDAR PIN SCHEDULE (Days 1 to 31)
-  // ----------------------------------------------------------------------------------------------
-  // The Master PIN automatically updates every day based on the calendar day of the month!
-  const DAILY_PIN_SCHEDULE = {
-    1: "3879",  2: "6166",  3: "2760",  4: "8346",  5: "5678",
-    6: "5328",  7: "8927",  8: "8883",  9: "9897", 10: "1591",
-   11: "8195", 12: "8456", 13: "7598", 14: "5763", 15: "5012",
-   16: "5411", 17: "4674", 18: "3747", 19: "7802", 20: "4027",
-   21: "8762", 22: "2133", 23: "9019", 24: "2541", 25: "2063",
-   26: "8893", 27: "3316", 28: "6363", 29: "5568", 30: "6680",
-   31: "5549"
-  };
-
-  function getMasterPinForToday() {
-    const todayDay = new Date().getDate(); // 1 - 31
-    return DAILY_PIN_SCHEDULE[todayDay] || "2026";
-  }
-  // ==============================================================================================
 
   // Deployed Apps Script Web App Endpoint
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4O2eHnkm1eZ3ZUJbLcWIATH1te02Aheul-Ox8jtLn-AtrlFtQqLmgbvRtr7W6ab9p4w/exec";
@@ -32,7 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const keyClearBtn = document.getElementById("key-clear");
   const keyDelBtn = document.getElementById("key-del");
 
+  // In-Memory Security States (Zero localStorage footprint)
   let enteredPin = "";
+  let sessionVerifiedPin = "";
 
   function updatePinDots() {
     for (let i = 0; i < 4; i++) {
@@ -52,20 +34,41 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (enteredPin.length === 4) {
-      setTimeout(() => {
-        const activeTodayPin = getMasterPinForToday();
-        if (enteredPin === activeTodayPin || enteredPin === "2026") {
-          // Success: Unlock portal for active session
-          if (pinLockOverlay) pinLockOverlay.classList.add("hidden");
-          enteredPin = "";
-          updatePinDots();
-        } else {
-          // Failure: Shake & Error
-          if (pinErrorMsg) pinErrorMsg.classList.remove("hidden");
-          if (pinCardBox) {
-            pinCardBox.classList.add("pin-error");
-            setTimeout(() => pinCardBox.classList.remove("pin-error"), 400);
+      setTimeout(async () => {
+        try {
+          // Verify entered PIN against private calendar table on backend
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "VERIFY_PIN",
+              pin: enteredPin
+            })
+          });
+          const resData = await response.json();
+
+          if (resData.status === "success") {
+            // Unlocked: Store valid PIN in memory for subsequent API authentications
+            sessionVerifiedPin = enteredPin;
+            
+            // Sync assignments and setup dropdowns now that access is approved
+            fetchLiveMasterData();
+
+            if (pinLockOverlay) pinLockOverlay.classList.add("hidden");
+            enteredPin = "";
+            updatePinDots();
+          } else {
+            // Failure: Shake & Error
+            if (pinErrorMsg) pinErrorMsg.classList.remove("hidden");
+            if (pinCardBox) {
+              pinCardBox.classList.add("pin-error");
+              setTimeout(() => pinCardBox.classList.remove("pin-error"), 400);
+            }
+            enteredPin = "";
+            updatePinDots();
           }
+        } catch (err) {
+          alert("❌ Network Error. Cannot verify PIN.");
           enteredPin = "";
           updatePinDots();
         }
@@ -251,11 +254,18 @@ document.addEventListener("DOMContentLoaded", function() {
   // Explicitly clear main input fields on page load
   resetMainScoringInputs();
 
-  // 1. Fetch Dynamic Data from Database Web API
+  // 1. Fetch Dynamic Data from Database Web API (Secure POST Request with Verified Session PIN)
   async function fetchLiveMasterData() {
     if (liveStatusBadge) liveStatusBadge.textContent = "● SYNCING WITH DATABASE...";
     try {
-      const response = await fetch(APPS_SCRIPT_URL);
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "GET_INITIAL_DATA",
+          pin: sessionVerifiedPin
+        })
+      });
       const data = await response.json();
 
       if (data.status === "success") {
@@ -265,6 +275,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (liveStatusBadge) liveStatusBadge.textContent = "● LIVE DATABASE SYNCED";
         populateLevelDropdown();
+      } else {
+        if (liveStatusBadge) liveStatusBadge.textContent = "● SYNC ERROR: UNAUTHORIZED";
       }
     } catch (err) {
       console.warn("Could not connect to live database:", err);
@@ -413,7 +425,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   selectAthlete.addEventListener("change", resetMainScoringInputs);
 
-  // Submit Score Handler
+  // Submit Score Handler (Secure POST Request passing Verified Session PIN)
   btnSubmitScore.addEventListener("click", async function() {
     const level = parseInt(selectLevel.value);
     const judgeNo = parseInt(selectJudge.value);
@@ -423,6 +435,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const payload = {
       action: "SUBMIT_SCORE",
+      pin: sessionVerifiedPin,
       level: level,
       judgeNo: judgeNo,
       elemNo: elemNo,
@@ -469,7 +482,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Focused 1-Session View Score Handler (Modal Shows Submitted Record)
+  // Focused 1-Session View Score Handler (Secure query passing Verified Session PIN)
   if (btnFetchScores) {
     btnFetchScores.addEventListener("click", async function(e) {
       if (e) e.preventDefault();
@@ -485,7 +498,7 @@ document.addEventListener("DOMContentLoaded", function() {
       modalScoresBody.innerHTML = `<div class="loading-spinner" style="padding:20px; text-align:center; color:#94a3b8;">Fetching score from Google Sheets...</div>`;
 
       try {
-        const getUrl = `${APPS_SCRIPT_URL}?action=GET_SCORES&level=${level}&athleteNo=${athleteNo}`;
+        const getUrl = `${APPS_SCRIPT_URL}?action=GET_SCORES&level=${level}&athleteNo=${athleteNo}&pin=${encodeURIComponent(sessionVerifiedPin)}`;
         const response = await fetch(getUrl);
         const data = await response.json();
 
@@ -584,7 +597,4 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
       </div>`;
   }
-
-  // Initial Load
-  fetchLiveMasterData();
 });
